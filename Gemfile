@@ -54,7 +54,7 @@ gem "bootsnap", require: false
 
 gem 'jquery-rails'
 gem 'turbolinks'
-gem 'faker', '~> 1.4', '>= 1.4.2'
+gem 'faker', '~> 2.19'
 gem 'will_paginate', '~> 3.1', '>= 3.1.2'
 gem 'bootstrap-will_paginate', '~> 0.0.11'
 
