@@ -6,10 +6,11 @@ class UsersController < ApplicationController
   def index
     @users = User.paginate(page: params[:page])
   end
+
   def show
     @user = User.find(params[:id])
   end
-  
+
   def new
     @user = User.new
   end
@@ -17,8 +18,10 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      log_in @user
-      flash[:success] = "Welcome to the Sample App!"
+      # log_in @user
+      # flash[:success] = "Welcome to the Sample App!"
+      UserMailer.account_activation(@user).deliver_now
+      flash[:info] = "Please check your email to activate your accout."
       redirect_to @user
     else
       render 'new'
@@ -41,25 +44,26 @@ class UsersController < ApplicationController
 
   def destroy
     User.find(params[:id]).destroy
-    flash[:success] = "User deleted"
+    flash[:success] = 'User deleted'
     redirect_to users_url
   end
 
   private
-    def logged_in_user
-      unless logged_in?
-        store_location
-        flash[:danger] = "Please log in."
-        redirect_to login_url
-      end
+  def logged_in_user
+    unless logged_in?
+      store_location
+      flash[:danger] = 'Please log in.'
+      redirect_to login_url
     end
+  end
     def user_params
       params.require(:user).permit(:name, :email, :password, :password_confirmation)
     end
-    def correct_user
-      @user = User.find(params[:id])
-      redirect_to(root_url) unless @user == current_user
-    end
+
+  def correct_user
+    @user = User.find(params[:id])
+    redirect_to(root_url) unless current_user?(@user)
+  end
 
     def admin_user
       redirect_to(root_url) unless current_user.admin?
