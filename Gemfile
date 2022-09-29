@@ -56,6 +56,8 @@ gem 'jquery-rails'
 gem 'turbolinks'
 gem 'faker', '~> 2.19'
 # gem 'will_paginate', '~> 3.1', '>= 3.1.2'
+gem 'carrierwave', '~> 2.2', '>= 2.2.2'
+gem 'mini_magick', '~> 4.11'
 gem 'will_paginate', '3.3.0'
 gem 'bootstrap-will_paginate', '~> 0.0.11'
 
